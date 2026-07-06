@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My JSXGraph Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraphcore.js"></script>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.jsdelivr.net/npm/jsxgraph/distrib/jsxgraph.css">
+</head>
+<body>
+    <a href="https://github.com/dirkarnez/jsxgraph-playground" target="_blank">dirkarnez/jsxgraph-playground</a><br>
+    <div id="box" class="jxgbox" style="width: 500px; aspect-ratio: 1/1; margin: 0 auto;"></div>
+    <button type="button" id="btn-save-svg">Download as SVG</button>
+    <script>
+        const downloadText = (stringContent, mimeType) => {
+            let blob = new Blob([stringContent], { type: mimeType });
+            const a = document.createElement("a");
+            a.innerText = ".vcd file";
+            a.href = URL.createObjectURL(blob);
+            a.download = `generated.svg`;
+            a.addEventListener("click", (e) => {
+              setTimeout(() => {
+                URL.revokeObjectURL(a.href);
+                document.body.removeChild(a);
+              }, 0);
+            })
+            document.body.appendChild(a);
+            a.click();
+        };
+        
+        var board = JXG.JSXGraph.initBoard('box', {boundingbox: [-10, 10, 10, -10], axis: true});
+        
+        var a = board.create('slider', [[2, -5], [7, -5], [-5, 1, 5]], { name: 'a' });
+        var b = board.create('slider', [[2, -6], [7, -6], [-5, 0, 5]], { name: 'b' });
+        var c = board.create('slider', [[2, -7], [7, -7], [-5, 0, 5]], { name: 'c' });
+
+        var f = board.create('functiongraph', [
+            function(x) {
+                return a.Value() * x * x + b.Value() * x + c.Value();
+            }
+        ]);
+        
+        const btnSaveSVG = document.getElementById("btn-save-svg");
+        btnSaveSVG.addEventListener("click", function () {
+            downloadText(new XMLSerializer().serializeToString(board.renderer.svgRoot), "image/svg+xml");
+        });
+    </script>
+</body>
+</html>
