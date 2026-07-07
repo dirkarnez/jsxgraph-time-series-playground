@@ -27,8 +27,23 @@
             document.body.appendChild(a);
             a.click();
         };
+
+
+        var board = JXG.JSXGraph.initBoard('box', {
+            boundingbox: [-5, 10, 5, -5],
+            axis: false // Turn off default auto-axis
+        });
+
+        // Create a fixed Y-axis and standard X-axis
+        board.create('axis', [[0, 0], [0, 1]], {
+            position: 'fixed',
+            anchor: 'left',
+            anchorDist: 1
+        });
+
+        board.create('axis', [[0, 0], [1, 0]]); 
         
-        var board = JXG.JSXGraph.initBoard('box', {boundingbox: [-10, 10, 10, -10], axis: true});
+        // var board = JXG.JSXGraph.initBoard('box', {boundingbox: [-10, 10, 10, -10], axis: true});
         
         var a = board.create('slider', [[2, -5], [7, -5], [-5, 1, 5]], { name: 'a' });
         var b = board.create('slider', [[2, -6], [7, -6], [-5, 0, 5]], { name: 'b' });
