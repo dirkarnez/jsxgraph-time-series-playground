@@ -36,12 +36,16 @@
 
         // Create a fixed Y-axis and standard X-axis
         board.create('axis', [[0, 0], [0, 1]], {
-            position: 'fixed',
+            position: 'sticky',
             anchor: 'left',
             anchorDist: 1
         });
 
-        board.create('axis', [[0, 0], [1, 0]]); 
+        board.create('axis', [[0, 0], [1, 0]], {
+            position: 'sticky',
+            anchor: 'right',
+            anchorDist: 1
+        });
         
         // var board = JXG.JSXGraph.initBoard('box', {boundingbox: [-10, 10, 10, -10], axis: true});
         
